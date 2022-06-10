@@ -27,7 +27,7 @@ export const Page = () => {
         <p>
           Render pages (changed) with mock data. This makes it easy to build and review page states without
           needing to navigate to them in your app. Here are some handy patterns for managing page
-          data in Storybook:
+          data in Storybook 2:
         </p>
         <ul>
           <li>
