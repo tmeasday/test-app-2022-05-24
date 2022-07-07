@@ -1,5 +1,5 @@
 name: Chromatic
-on: push
+on: pull_request
 
 jobs:
   chromatic:
@@ -10,14 +10,22 @@ jobs:
           fetch-depth: 0
       - name: install
         run: yarn install --frozen-lockfile
-      - uses: chromaui/action-next@v1
-        with:
-          exitOnceUploaded: true
-          onlyChanged: true
-          traceChanged: true
-          diagnostics: true
-        env:
-          CHROMATIC_PROJECT_TOKEN: 4a03d564ae85
+      - name: chromatic
+        run: npx chromatic -t 4a03d564ae85
+        env: 
+          CHROMATIC_SHA: ${{github.event.pull_request.head.sha}}
+          CHROMATIC_BRANCH: ${{github.event.pull_request.head.ref}}
+          CHROMATIC_SLUG: ${{github.event.pull_request.head.repo.full_name}}
+          CHROMATIC_PULL_REQUEST_SHA: ${{github.event.sha}}
+      # - uses: chromaui/action-next@v1
+      #   with:
+      #     exitOnceUploaded: true
+      #     onlyChanged: true
+      #     traceChanged: true
+      #     diagnostics: true
+      #   env:
+      #     CHROMATIC_PROJECT_TOKEN: 8709906d3258
+      #     CHROMATIC_INDEX_URL: https://www.staging-chromatic.com/graphql
       - uses: actions/upload-artifact@v2
         with:
           path: |
