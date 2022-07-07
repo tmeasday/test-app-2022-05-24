@@ -12,6 +12,11 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: chromatic
         run: npx chromatic -t 4a03d564ae85
+        env: 
+          CHROMATIC_SHA: ${{github.event.pull_request.head.sha}}
+          CHROMATIC_BRANCH: ${{github.event.pull_request.head.ref}}
+          CHROMATIC_SLUG: ${{github.event.pull_request.head.repo.full_name}}
+          CHROMATIC_PULL_REQUEST_SHA: ${{github.event.sha}}
       # - uses: chromaui/action-next@v1
       #   with:
       #     exitOnceUploaded: true
